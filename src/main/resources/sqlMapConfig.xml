@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+    PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <!--Spring整合后不需要-->
+    <!--<environments default="development">
+        <environment id="development">
+            &lt;!&ndash; 使用jdbc事务管理&ndash;&gt;
+            <transactionManager type="JDBC"/>
+            &lt;!&ndash; 数据库连接池&ndash;&gt;
+            <dataSource type="POOLED">
+                <property name="driver" value="org.sqlite.JDBC"/>
+                <property name="url" value="jdbc:sqlite:/Users/emery/IdeaProjects/Sqlite/test.db"/>
+            </dataSource>
+        </environment>
+    </environments>-->
+
+
+
+
+
+
+    <!-- 加载映射sql定义文件 使用注解后不需要 -->
+    <!--<mappers>
+        <mapper resource="com/emery/db/EmpRowMapper.xml"/>
+        <package name="com.emery.db"/>
+    </mappers>-->
+
+</configuration>
+

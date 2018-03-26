@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--POPJ映射-->
+<mapper namespace="com.emery.test.mapper.FactoryMapper">
+    <!--数据库表映射-->
+    <resultMap id="factoryRM" type="com.emery.test.domain.Factory">
+        <id column="FACTORY_ID" property="id"/>
+        <result column="FULL_NAME" property="fullName"/>
+        <result column="FACTORY_NAME" property="factoryName"/>
+        <result column="CONTRACTOR" property="contractor"/>
+        <result column="PHONE" property="phone"/>
+        <result column="MOBILE" property="mobile"/>
+        <result column="FAX" property="fax"/>
+        <result column="NOTE" property="note"/>
+        <result column="ORDER_NO" property="orderNo"/>
+        <result column="STATE" property="state"/>
+    </resultMap>
+
+    <!--查询所有-->
+    <select id="find" parameterType="com.emery.test.domain.Factory" resultMap="factoryRM">
+      SELECT * FROM FACTORY_C WHERE 1=1;
+    </select>
+    <!--查询一个-->
+    <select id="get" resultMap="factoryRM" parameterType="string">
+        SELECT * FROM FACTORY_C WHERE FACTORY_ID = #{id}
+    </select>
+
+    <!--新增-->
+    <insert id="insert" parameterType="com.emery.test.domain.Factory">
+        INSERT INTO FACTORY_C(FACTORY_ID, FULL_NAME, FACTORY_NAME, CONTRACTOR, PHONE, MOBILE, FAX, NOTE, STATE, ORDER_NO)
+         VALUES (strftime("%s",'now')*1000,#{fullName},#{factoryName},#{contractor},#{phone},#{mobile},#{fax},#{note},#{state},#{orderNo});
+    </insert>
+
+    <update id="update" parameterType="com.emery.test.domain.Factory">
+        UPDATE FACTORY_C
+        <set>
+            <if test="fullName!=null">
+                FULL_NAME = #{fullName}
+            </if>
+            <if test="factoryName!=null">
+                FACTORY_NAME = #{factoryName}
+            </if>
+            <if test="contractor!=null">
+                CONTRACTOR = #{contractor}
+            </if>
+            <if test="phone!=null">
+                PHONE = #{phone}
+            </if>
+            <if test="mobile!=null">
+                MOBILE = #{mobile}
+            </if>
+            <if test="fax!=null">
+                FAX = #{fax}
+            </if>
+            <if test="note!=null">
+                NOTE = #{note}
+            </if>
+
+            <if test="orderNo!=null">
+                ORDER_NO = #{orderNo}
+            </if>
+        </set>
+         WHERE FACTORY_ID = #{id}
+    </update>
+    <delete id="delete" parameterType="string">
+        DELETE FROM FACTORY_C WHERE FACTORY_ID = #{id}
+    </delete>
+    <delete id="deleteBatch" parameterType="string">
+        DELETE FROM FACTORY_C WHERE FACTORY_ID
+        <foreach collection="array" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+
+    <!--修改状态-->
+    <update id="changeState" parameterType="map">
+        UPDATE FACTORY_C SET STATE = #{state}
+        WHERE FACTORY_ID IN
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </update>
+</mapper>
